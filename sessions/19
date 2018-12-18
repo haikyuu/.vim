@@ -1,0 +1,107 @@
+let SessionLoad = 1
+if &cp | set nocp | endif
+let s:so_save = &so | let s:siso_save = &siso | set so=0 siso=0
+let v:this_session=expand("<sfile>:p")
+silent only
+silent tabonly
+cd ~/Workspace/sp/my_blog
+if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
+  let s:wipebuf = bufnr('%')
+endif
+set shortmess=aoO
+badd +1 ~/Workspace/sp/my_blog
+badd +56 _config.yml
+badd +16 about/index.md
+badd +1 ~/Workspace/sp/blog/about.mdy
+badd +6 ~/Workspace/sp/blog/about.md
+badd +1 ~/Workspace/sp/blog/_includes
+badd +1 about/stackoverflow.html
+badd +1 ~/Workspace/sp/blog/_includes/stackoverflow.html
+badd +2 _includes/stackoverflow.html
+badd +1 ~/Workspace/sp/blog/_includes/index.md
+badd +76 README.md
+badd +62 _layouts/default.html
+badd +7 _data/authors.yml
+badd +4 _includes/navigation.html
+badd +1 _includes/twitter.html
+badd +1 _includes/website.html
+badd +1 _posts/1863-11-19-gettysburg-address.md
+badd +48 _layouts/page.html
+badd +2 _includes/head.html
+badd +1 _includes/location.html
+badd +6 _includes/subscribe-form.html
+badd +22 NetrwTreeListing\ 67
+badd +11 _posts/2017-07-27-the-editor.html
+badd +0 _posts/_config.yml
+badd +8 .gitignore
+badd +16 .travis.yml
+argglobal
+silent! argdel *
+edit NetrwTreeListing\ 67
+set splitbelow splitright
+wincmd _ | wincmd |
+vsplit
+1wincmd h
+wincmd w
+wincmd t
+set winminheight=0
+set winheight=1
+set winminwidth=0
+set winwidth=1
+exe 'vert 1resize ' . ((&columns * 41 + 50) / 100)
+exe 'vert 2resize ' . ((&columns * 58 + 50) / 100)
+argglobal
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+silent! normal! zE
+let s:l = 13 - ((1 * winheight(0) + 10) / 20)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+13
+normal! 04|
+lcd ~/Workspace/sp/my_blog
+wincmd w
+argglobal
+if bufexists('~/Workspace/sp/my_blog/NetrwTreeListing\ 18') | buffer ~/Workspace/sp/my_blog/NetrwTreeListing\ 18 | else | edit ~/Workspace/sp/my_blog/NetrwTreeListing\ 18 | endif
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+silent! normal! zE
+let s:l = 1 - ((0 * winheight(0) + 10) / 20)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+1
+normal! 0
+lcd ~/Workspace/sp/my_blog
+wincmd w
+2wincmd w
+exe 'vert 1resize ' . ((&columns * 41 + 50) / 100)
+exe 'vert 2resize ' . ((&columns * 58 + 50) / 100)
+tabnext 1
+if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0
+  silent exe 'bwipe ' . s:wipebuf
+endif
+unlet! s:wipebuf
+set winheight=1 winwidth=20 shortmess=filnxtToO
+set winminheight=1 winminwidth=1
+let s:sx = expand("<sfile>:p:r")."x.vim"
+if file_readable(s:sx)
+  exe "source " . fnameescape(s:sx)
+endif
+let &so = s:so_save | let &siso = s:siso_save
+doautoall SessionLoadPost
+unlet SessionLoad
+" vim: set ft=vim :
